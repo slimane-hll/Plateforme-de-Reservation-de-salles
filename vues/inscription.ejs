@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Inscription</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Inscription</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <% if(!user){ %>
+        <a href="/inscription">Inscription</a> |
+        <a href="/connexion">Connexion</a>
+      <% } else { %>
+        <a href="/deconnexion">Déconnexion</a>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <% if(typeof message !== 'undefined' && message){ %>
+      <p style="color:crimson"><%= message %></p>
+    <% } %>
+    <form action="/inscription" method="post">
+      <label>Nom <input name="nom" required></label>
+      <label>Email <input name="email" type="email" required></label>
+      <label>Mot de passe <input name="motDePasse" type="password" required></label>
+      <label>Rôle <select name="role"><option value="client">Client</option><option value="proprietaire">Propriétaire</option></select></label>
+      <button type="submit">S'inscrire</button>
+    </form>
+    <p><a href="/connexion">Déjà inscrit ?</a></p>
+  </main>
+</body>
+</html>

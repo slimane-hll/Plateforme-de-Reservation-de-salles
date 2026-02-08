@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Avis - <%= salle.titre %></title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Avis pour : <%= salle.titre %></h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <% if(user && user.role === 'admin'){ %>
+        <a href="/admin/utilisateurs">Utilisateurs</a> |
+        <a href="/admin/salles">Salles</a> |
+        <a href="/admin/avis">Avis</a> |
+      <% } %>
+      <% if(!user){ %>
+        <a href="/inscription">Inscription</a> |
+        <a href="/connexion">Connexion</a>
+      <% } else { %>
+        <a href="/deconnexion">Déconnexion</a>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <h2>Description</h2>
+    <p><%= salle.description %></p>
+    <p>Adresse: <%= salle.localisation && salle.localisation.adresse ? salle.localisation.adresse : '—' %></p>
+    <h2>Avis</h2>
+    <% if(avis && avis.length){ %>
+      <ul>
+        <% avis.forEach(function(a){ %>
+          <li>
+            <strong><%= a.client ? a.client.nom : 'Utilisateur' %></strong> (<%= a.client ? a.client.email : '' %>) - <%= a.note %>/5
+            <p><%= a.commentaire %></p>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>Aucun avis pour cette salle.</p>
+    <% } %>
+  </main>
+</body>
+</html>

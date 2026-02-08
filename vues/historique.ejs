@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Historique</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Historique des réservations</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <% if(user && user.role === 'client'){ %>
+        <a href="/reservations/mon-historique">Historique</a> |
+      <% } %>
+      <a href="/deconnexion">Déconnexion</a>
+    </nav>
+  </header>
+  <main>
+    <ul>
+      <% if(reservations && reservations.length){ %>
+        <% reservations.forEach(function(r){ %>
+          <li>
+            <strong><%= r.salle && r.salle.titre %></strong>
+            du <%= r.dateDebut.toISOString().slice(0,10) %> au <%= r.dateFin.toISOString().slice(0,10) %>
+            - Prix: <%= r.prixTotal %> €
+            <% if(user && String(user._id) === String(r.client)){ %>
+              <form action="/reservations/annuler/<%= r._id %>" method="post" style="display:inline; margin-left:8px">
+                <button type="submit" onclick="return confirm('Annuler cette réservation ?')">Annuler</button>
+              </form>
+            <% } %>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>Aucune réservation</li>
+      <% } %>
+    </ul>
+  </main>
+</body>
+</html>

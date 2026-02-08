@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Modifier salle</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Modifier une salle</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <% if(user && user.role === 'proprietaire'){ %>
+        <a href="/salles/proprietaire/mes-salles">Mes salles</a> |
+         <a href="/salles/ajouter">Ajouter une salle</a> |
+         <a href="/reservations/proprietaire/mes-reservations">Réservations</a> |
+      <% } %>
+      <a href="/deconnexion">Déconnexion</a>
+    </nav>
+  </header>
+  <main>
+    <form action="/salles/modifier/<%= salle._id %>" method="post">
+      <label>Titre <input name="titre" value="<%= salle.titre %>" required></label>
+      <label>Description <textarea name="description"><%= salle.description %></textarea></label>
+      <label>Capacité <input name="capacite" type="number" value="<%= salle.capacite %>"></label>
+      <label>Prix <input name="prix" type="number" value="<%= salle.prix %>"></label>
+      <label>Adresse <input name="adresse" value="<%= salle.localisation && salle.localisation.adresse %>"></label>
+      <button type="submit">Enregistrer</button>
+    </form>
+  </main>
+</body>
+</html>

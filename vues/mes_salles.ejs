@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mes salles</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Mes salles</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <% if(user && user.role === 'proprietaire'){ %>
+        <a href="/salles/ajouter">Ajouter une salle</a> |
+        <a href="/reservations/proprietaire/mes-reservations">Réservations</a> |
+      <% } %>
+      <a href="/deconnexion">Déconnexion</a>
+    </nav>
+  </header>
+  <main>
+    <% if(salles && salles.length){ %>
+      <% salles.forEach(function(item){ %>
+        <section>
+          <h2><%= item.salle.titre %> - <%= item.salle.prix %> €</h2>
+          <p><%= item.salle.description %></p>
+          <p>Capacité: <%= item.salle.capacite %></p>
+          <h3>Avis</h3>
+          <% if(item.avis && item.avis.length){ %>
+            <ul>
+              <% item.avis.forEach(function(a){ %>
+                <li><strong><%= a.client ? a.client.nom : 'Utilisateur' %></strong> - <%= a.note %>/5 - <%= a.commentaire %></li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <p>Aucun avis pour cette salle.</p>
+          <% } %>
+          <div style="margin-top:8px">
+            <a href="/salles/modifier/<%= item.salle._id %>">Modifier</a>
+            <form action="/salles/supprimer/<%= item.salle._id %>" method="post" style="display:inline; margin-left:8px">
+              <button type="submit" onclick="return confirm('Supprimer cette salle ?')">Supprimer</button>
+            </form>
+          </div>
+        </section>
+      <% }) %>
+    <% } else { %>
+      <p>Vous n'avez pas encore de salles.</p>
+    <% } %>
+  </main>
+</body>
+</html>

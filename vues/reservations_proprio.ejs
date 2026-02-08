@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Réservations - Propriétaire</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Réservations de vos salles</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <a href="/salles/proprietaire/mes-salles">Mes salles</a> |
+      <a href="/deconnexion">Déconnexion</a>
+    </nav>
+  </header>
+  <main>
+    <% if(reservations && reservations.length){ %>
+      <ul>
+        <% reservations.forEach(function(r){ %>
+          <li>
+            <strong><%= r.salle ? r.salle.titre : 'Salle' %></strong>
+            réservé par <%= r.client ? r.client.nom : 'Utilisateur' %>
+            du <%= new Date(r.dateDebut).toISOString().slice(0,10) %> au <%= new Date(r.dateFin).toISOString().slice(0,10) %>
+            - Prix: <%= r.prixTotal %> €
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>Aucune réservation pour vos salles.</p>
+    <% } %>
+  </main>
+</body>
+</html>

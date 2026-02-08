@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Utilisateurs</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Utilisateurs</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <a href="/admin/utilisateurs">Utilisateurs</a> |
+      <a href="/admin/salles">Salles</a> |
+      <a href="/admin/avis">Avis</a> |
+      <a href="/deconnexion">Déconnexion</a>
+    </nav>
+  </header>
+  <main>
+    <ul>
+      <% if(utilisateurs && utilisateurs.length){ %>
+        <% utilisateurs.forEach(function(u){ %>
+        <li>
+          <strong><%= u.nom %></strong> - <%= u.email %> - <%= u.role %>
+          <% if(u.role !== 'admin'){ %>
+            <form style="display:inline" action="/admin/utilisateurs/etat/<%= u._id %>" method="post">
+              <button type="submit"><%= u.actif ? 'Désactiver' : 'Activer' %></button>
+            </form>
+          <% } else { %>
+            <span style="margin-left:8px;color:#666">compte admin</span>
+          <% } %>
+        </li>
+      <% }) %>
+      <% } else { %>
+        <li>Aucun utilisateur</li>
+      <% } %>
+    </ul>
+  </main>
+</body>
+</html>

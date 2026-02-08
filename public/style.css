@@ -1,0 +1,14 @@
+
+body{ font-family: Arial, Helvetica, sans-serif; margin:20px; background:#f5f7fb; color:#222 }
+header{ margin-bottom:20px; padding:12px; background:#2b6cb0; color:white }
+nav a{ margin-right:10px; color: #e6f0ff; text-decoration:none }
+nav a:hover{ text-decoration:underline }
+main{ max-width:900px; margin-top:16px }
+ul{ list-style:none; padding:0 }
+li{ background:white; border:1px solid #e2e8f0; padding:12px; margin-bottom:10px; border-radius:6px }
+h1,h2,h3{ margin:6px 0 }
+form{ margin:8px 0 }
+label{ display:inline-block; margin-right:8px }
+input, textarea, select{ margin-left:6px; padding:6px; border:1px solid #cbd5e1; border-radius:4px }
+button{ margin-left:6px; padding:6px 10px; background:#2b6cb0; color:white; border:none; border-radius:4px }
+

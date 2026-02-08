@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Salles - Admin</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Toutes les salles</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <a href="/admin/utilisateurs">Utilisateurs</a> |
+      <a href="/admin/avis">Avis</a> |
+      <a href="/deconnexion">Déconnexion</a>
+    </nav>
+  </header>
+  <main>
+    <% if(salles && salles.length){ %>
+      <ul>
+        <% salles.forEach(function(s){ %>
+          <li>
+            <strong><%= s.titre %></strong> - <%= s.prix %> € - <%= s.capacite %> pers
+            <form action="/salles/supprimer/<%= s._id %>" method="post" style="display:inline; margin-left:8px">
+              <button type="submit" onclick="return confirm('Supprimer cette salle ?')">Supprimer</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>Aucune salle</p>
+    <% } %>
+  </main>
+</body>
+</html>

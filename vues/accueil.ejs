@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Accueil - Salles</title>
+  <link rel="stylesheet" href="/style.css">
+  </head>
+<body>
+  <header>
+    <h1>Plateforme de réservation - Accueil</h1>
+    <nav>
+      <a href="/">Accueil</a> |
+      <% if(!user){ %>
+        <a href="/inscription">Inscription</a> |
+        <a href="/connexion">Connexion</a>
+      <% } else { %>
+        <% if(user.role === 'client'){ %>
+          <a href="/reservations/mon-historique">Historique</a> |
+        <% } %>
+        <% if(user.role === 'proprietaire'){ %>
+          <a href="/salles/ajouter">Ajouter une salle</a> |
+          <a href="/salles/proprietaire/mes-salles">Mes salles</a> |
+          <a href="/reservations/proprietaire/mes-reservations">Réservations</a> |
+        <% } %>
+        <% if(user.role === 'admin'){ %>
+          <a href="/admin/utilisateurs">Utilisateurs</a> |
+          <a href="/admin/salles">Salles</a> |
+          <a href="/admin/avis">Avis</a> |
+        <% } %>
+        <a href="/deconnexion">Déconnexion</a>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <h2>Salles disponibles</h2>
+    <ul>
+      <% if(salles && salles.length){ %>
+        <% salles.forEach(function(salle){ %>
+          <li>
+            <h3><%= salle.titre %> - <%= salle.prix %> €</h3>
+            <p><%= salle.description %></p>
+            <p>Capacité: <%= salle.capacite %></p>
+            <% if(user && user.role === 'client'){ %>
+              <form action="/reservations/reserver/<%= salle._id %>" method="post">
+                <label>Début <input type="date" name="dateDebut" required></label>
+                <label>Fin <input type="date" name="dateFin" required></label>
+                <button type="submit">Réserver</button>
+              </form>
+              <form action="/avis/ajouter/<%= salle._id %>" method="post">
+                <label>Note <select name="note"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>
+                <input name="commentaire" placeholder="Laisser un commentaire">
+                <button type="submit">Envoyer avis</button>
+              </form>
+            <% } %>
+            <p><a href="/salles/<%= salle._id %>/avis">Voir les avis</a></p>
+            <% if(user && user.role === 'proprietaire' && String(user._id) === String(salle.proprietaire)){ %>
+              <p><a href="/salles/proprietaire/mes-salles">Voir vos salles et avis</a></p>
+            <% } %>
+            <% if(user && user.role === 'admin'){ %>
+              <form action="/salles/supprimer/<%= salle._id %>" method="post" style="display:inline; margin-left:8px">
+                <button type="submit" onclick="return confirm('Supprimer cette salle ?')">Supprimer</button>
+              </form>
+            <% } %>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>Aucune salle disponible</li>
+      <% } %>
+    </ul>
+  </main>
+</body>
+</html>
